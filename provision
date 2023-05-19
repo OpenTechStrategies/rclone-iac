@@ -1,0 +1,19 @@
+#!/bin/bash
+# Provision ubuntu machines
+# Setup rlcone
+# Setup https://github.com/OpenTechStrategies/permanent-rclone-qa for tests
+
+sudo apt-get update
+sudo apt -y upgrade
+sudo apt install software-properties-common
+sudo apt -y install git
+sudo apt install rclone -y
+cd ~
+git clone https://github.com/OpenTechStrategies/permanent-rclone-qa
+cd permanent-rclone-qa
+pip install -r requirements.txt
+./create-files.py
+CURRENTDATETIME=`date +"%Y-%m-%d_%T"`
+echo "00 13 * * 1-5 ./upload-test.py test-tree/special-files/1000-1B --remote-dir=1000-10B-${CURRENTDATETIME}-parallel --log-file=log-1000-1B-${CURRENTDATETIME}.txt --remote=prod --archive-path='/archives/QA (0a21-0000)/My Files/'" >> uploadcron
+crontab uploadcron
+rm uploadcron

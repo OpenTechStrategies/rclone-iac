@@ -1,0 +1,17 @@
+[prod]
+type = sftp
+host = sftp.permanent.org
+user = example@mailservice.com
+pass = XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+shell_type = unix
+md5sum_command = none
+sha1sum_command = none
+
+[qa-dev]
+type = sftp
+host = sftp.permanent.org
+user = example@mailservice.com
+pass = XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+shell_type = unix
+md5sum_command = none
+sha1sum_command = none
