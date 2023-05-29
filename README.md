@@ -19,7 +19,7 @@ This means:
 - You have to [install rclone](https://rclone.org/install/) on a secured machine (Ideally the host from which this IaC is run)
 - Configure the [permanent remotes](https://rclone.org/remote_setup/) see [Running rclone against Permanent.org instances](https://github.com/permanentOrg/sftp-service/#running-rclone-against-permanentorg-instances) for more detailed information if any confusion arises.
 - Replace the contents of `rclone.conf` with the content of your local configuration from `~/.config/rclone/rclone.conf`
-### SSH Access
+### SSH access
 
 To be able to `ssh` into the created instances with your existing ssh-key pass the public part as described below.
 
@@ -28,6 +28,12 @@ Run `export TF_VAR_PUBLIC_KEY=~/.ssh/id_rsa.pub` you can also pass a custom path
 We also use [terraform provisioners](). This means a private key is needed by the provision to connect and execute the provision instructions hence pass the private part of your ssh-key as described below.
 
 Run `export TF_VAR_PRIVATE_KEY=~/.ssh/id_rsa` you can also pass a custom path for example `export TF_VAR_PRIVATE_KEY=custom/path/to/privkey`
+
+### Change number of machines
+
+The default number of machines that would be created is 1.
+
+Run `export TF_VAR_NUMBER_OF_MACHINES=4` (This example sets the number of machines to 5. *The counting starts from 0 :)*)
 
 ---
 - `terraform plan`
