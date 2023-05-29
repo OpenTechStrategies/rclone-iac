@@ -33,7 +33,7 @@ Run `export TF_VAR_PRIVATE_KEY=~/.ssh/id_rsa` you can also pass a custom path fo
 
 The default number of machines that would be created is 1.
 
-Run `export TF_VAR_NUMBER_OF_MACHINES=4` (This example sets the number of machines to 5. *The counting starts from 0 :)*)
+Run `export TF_VAR_NUMBER_OF_MACHINES=5` (This example sets the number of machines to 5.)
 
 ---
 - `terraform plan`
