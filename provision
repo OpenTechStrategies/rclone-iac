@@ -17,7 +17,6 @@ git clone https://github.com/OpenTechStrategies/permanent-rclone-qa
 cd permanent-rclone-qa
 pip install -r requirements.txt
 ./create-files.py
-CURRENTDATETIME=`date +"%Y-%m-%d_%T"`
-echo "00 13 * * 1-5 ~/permanent-rclone-qa/upload-test.py ~/permanent-rclone-qa/test-tree/special-files/1000-1B --remote-dir=1000-10B-${CURRENTDATETIME}-parallel --log-file=log-1000-1B-${CURRENTDATETIME}.txt --remote=prod --archive-path='/archives/QA (0a21-0000)/My Files/'" >> uploadcron
+echo "00 13 * * 1-5 ~/permanent-rclone-qa/upload-test.py ~/permanent-rclone-qa/test-tree/special-files/1000-1B --remote-dir=1000-10B-$(date +"%Y-%m-%d_%T")-parallel --log-file=log-1000-1B-$(date +"%Y-%m-%d_%T").txt --remote=prod --archive-path='/archives/QA (0a21-0000)/My Files/'" >> uploadcron
 crontab uploadcron
 rm uploadcron
