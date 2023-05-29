@@ -21,6 +21,16 @@ variable "PRIVATE_KEY" {
     type = string
 }
 
+variable "NUMBER_OF_MACHINES" {
+    type = number
+    default = 1
+}
+
+variable "SSH_USER" {
+    type = string
+    default = "ubuntu"
+}
+
 resource "aws_vpc" "mainvpc" {
   cidr_block = "10.0.0.0/16"
   enable_dns_support   = true
@@ -87,7 +97,7 @@ resource "aws_key_pair" "deployer" {
 
 resource "aws_instance" "rlcone_ec2" {
   ami           = "ami-0fcf52bcf5db7b003"
-  count         = 4
+  count         = var.NUMBER_OF_MACHINES
   instance_type = "t2.micro"
   key_name      = aws_key_pair.deployer.key_name
   vpc_security_group_ids = ["${aws_security_group.ingress-all.id}"]
@@ -100,7 +110,7 @@ resource "aws_instance" "rlcone_ec2" {
   connection {
     type     = "ssh"
     host     = self.public_ip
-    user     = "ubuntu"
+    user     = var.SSH_USER
     timeout  = "1m"
     private_key = "${file(var.PRIVATE_KEY)}"
   }
@@ -114,13 +124,13 @@ resource "aws_instance" "rlcone_ec2" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/provision",
-      "sudo /tmp/provision",
+      "sudo -u ${var.SSH_USER} /tmp/provision",
     ]
   }
 
   provisioner "file" {
     source      = "rclone.conf"
-    destination = ".config/rclone/rclone.conf"
+    destination = "/home/${var.SSH_USER}/.config/rclone/rclone.conf"
   }
 
 }
