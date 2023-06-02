@@ -9,7 +9,7 @@ sudo apt -y upgrade
 sudo apt -y install software-properties-common
 sudo apt -y install python3-pip
 sudo apt -y install git
-sudo apt -y install rclone
+curl https://rclone.org/install.sh | sudo bash
 rclone config file # Show loaded or prospective rclone config file
 rclone config touch # Create rclone config dir if does not exist
 cd ~
@@ -17,6 +17,6 @@ git clone https://github.com/OpenTechStrategies/permanent-rclone-qa
 cd permanent-rclone-qa
 pip install -r requirements.txt
 ./create-files.py
-echo "00 13 * * 1-5 ~/permanent-rclone-qa/upload-test.py ~/permanent-rclone-qa/test-tree/special-files/1000-1B --remote-dir=1000-10B-$(date +"%Y-%m-%d_%T")-parallel --log-file=log-1000-1B-$(date +"%Y-%m-%d_%T").txt --remote=prod --archive-path='/archives/QA (0a21-0000)/My Files/'" >> uploadcron
+echo "15 14 * * * ~/permanent-rclone-qa/upload-test.py ~/permanent-rclone-qa/test-tree/special-files/1000-1B --remote-dir=1000-10B-$(hostname)-parallel --log-file=log-1000-1B-$(hostname).txt --remote=dev --archive-path='/archives/rclone QA 1 (dev) (07av-0000)/My Files/'" >> uploadcron
 crontab uploadcron
 rm uploadcron
