@@ -115,9 +115,14 @@ resource "aws_instance" "rlcone_ec2" {
     private_key = "${file(var.PRIVATE_KEY)}"
   }
 
-   provisioner "file" {
+  provisioner "file" {
     source      = "provision"
     destination = "/tmp/provision"
+  }
+
+  provisioner "file" {
+    source      = "local-provision"
+    destination = "/tmp/local-provision"
   }
 
   # Change permissions on bash script and execute from ec2-user.
@@ -125,6 +130,13 @@ resource "aws_instance" "rlcone_ec2" {
     inline = [
       "chmod +x /tmp/provision",
       "sudo -u ${var.SSH_USER} /tmp/provision",
+    ]
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/local-provision",
+      "sudo -u ${var.SSH_USER} /tmp/local-provision",
     ]
   }
 

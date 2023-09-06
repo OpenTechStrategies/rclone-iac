@@ -1,7 +1,7 @@
 #!/bin/bash
 # Provision ubuntu machines
 # Setup rlcone
-# Setup https://github.com/OpenTechStrategies/permanent-rclone-qa for tests
+# Setup https://github.com/permanentOrg/sftp-qa for tests
 
 sudo apt-get update
 sudo apt -y remove needrestart # Preventing script from getting stuck with message "Pending kernel upgrade"
@@ -13,10 +13,8 @@ curl https://rclone.org/install.sh | sudo bash
 rclone config file # Show loaded or prospective rclone config file
 rclone config touch # Create rclone config dir if does not exist
 cd ~
-git clone https://github.com/OpenTechStrategies/permanent-rclone-qa
-cd permanent-rclone-qa
+git clone https://github.com/permanentOrg/sftp-qa
+cd sftp-qa
 pip install -r requirements.txt
 ./create-files.py
-echo "15 14 * * * ~/permanent-rclone-qa/upload-test.py ~/permanent-rclone-qa/test-tree/special-files/1000-1B --remote-dir=1000-10B-$(hostname)-parallel --log-file=log-1000-1B-$(hostname).txt --remote=dev --archive-path='/archives/rclone QA 1 (dev) (07av-0000)/My Files/'" >> uploadcron
-crontab uploadcron
-rm uploadcron
+
