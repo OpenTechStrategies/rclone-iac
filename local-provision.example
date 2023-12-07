@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "00 14 * * * ~/permanent-rclone-qa/upload-test.py ~/permanent-rclone-qa/test-tree/special-files/1000-1B --remote-dir=1000-10B-$(hostname)-parallel --log-file=log-1000-1B-$(hostname).txt --remote=dev --archive-path='/archives/rclone QA 1 (dev) (07av-0000)/My Files/'" >> uploadcron
+crontab uploadcron
+rm uploadcron
